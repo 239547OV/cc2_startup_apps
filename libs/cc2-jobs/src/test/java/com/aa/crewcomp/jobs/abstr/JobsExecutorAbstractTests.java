@@ -52,7 +52,7 @@ public class JobsExecutorAbstractTests {
     public void testMyJobsExecutor(){
         List<Integer> results = new ArrayList<Integer>();
         results.add(1);
-        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any()) ).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any(), any()) ).thenReturn(results);
         when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(100);
         when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
         MockitoAnnotations.openMocks(this);
@@ -63,7 +63,7 @@ public class JobsExecutorAbstractTests {
     public void testMyJobsExecutorException(){
         List<Integer> results = new ArrayList<Integer>();
         results.add(1);
-        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any()) ).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any(), any()) ).thenReturn(results);
         when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(100);
         when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
         MockitoAnnotations.openMocks(this);
@@ -76,7 +76,7 @@ public class JobsExecutorAbstractTests {
         for(int i = 0; i < 25; i++){
             results.add(i);
         }
-        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any(), any())).thenReturn(results);
         when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(250);
         when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
         MockitoAnnotations.openMocks(this);
@@ -87,7 +87,7 @@ public class JobsExecutorAbstractTests {
     @Test
     public void testExecuteWithEmptyGroupIds(){
         List<Integer> results = new ArrayList<Integer>();
-        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any(), any())).thenReturn(results);
         when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(0);
         MockitoAnnotations.openMocks(this);
         this.myJobsExecutor.execute();
@@ -100,7 +100,7 @@ public class JobsExecutorAbstractTests {
         for(int i = 0; i < 5; i++){
             results.add(i);
         }
-        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any(),any())).thenReturn(results);
         when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(50);
         when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
         MockitoAnnotations.openMocks(this);
@@ -115,7 +115,7 @@ public class JobsExecutorAbstractTests {
         for(int i = 0; i < 10; i++){
             results.add(i);
         }
-        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any(),any())).thenReturn(results);
         when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(100);
         when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
         MockitoAnnotations.openMocks(this);
@@ -127,7 +127,7 @@ public class JobsExecutorAbstractTests {
     public void testExecuteWithExceptionVerifiesExceptionUpdate(){
         List<Integer> results = new ArrayList<Integer>();
         results.add(1);
-        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any(), any())).thenReturn(results);
         when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(10);
         when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
         MockitoAnnotations.openMocks(this);
@@ -141,7 +141,7 @@ public class JobsExecutorAbstractTests {
         for(int i = 0; i < 30; i++){
             results.add(i);
         }
-        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any(), any())).thenReturn(results);
         when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(300);
         when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
         MockitoAnnotations.openMocks(this);
@@ -152,7 +152,7 @@ public class JobsExecutorAbstractTests {
 
     @Test
     public void testExecuteWithNullGroupIds(){
-        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(null);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any(), any())).thenReturn(null);
         when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(0);
         MockitoAnnotations.openMocks(this);
         this.myJobsExecutor.execute();
@@ -164,7 +164,7 @@ public class JobsExecutorAbstractTests {
     @Test
     public void testExecuteEarlyReturnWithEmptyGroupIds(){
         List<Integer> results = new ArrayList<Integer>();
-        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any(), any())).thenReturn(results);
         when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(0);
         MockitoAnnotations.openMocks(this);
         this.myJobsExecutor.execute();

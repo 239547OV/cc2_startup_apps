@@ -4,8 +4,7 @@ import java.util.List;
 
 public interface InputDatabaseConnectorInterface<InputRecordType> {
     public List<InputRecordType> query(Object query);
-    public List<Integer> queryGroupIds(Object query);
-    public Object getAllGroupIdsQuery(Object query);
-    public Object getPageQuery(Object query, Integer leftId, Integer rightId);
+    public List<Integer> queryGroupIds(Object query, String groupIdColumnName);
+    public Object getPageQuery(Object query, String groupIdColumnName, Integer leftId, Integer rightId);
     public Integer count(Object query);
 }

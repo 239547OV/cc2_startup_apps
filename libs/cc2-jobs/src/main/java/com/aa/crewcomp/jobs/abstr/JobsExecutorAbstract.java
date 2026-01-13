@@ -37,8 +37,7 @@ public abstract class JobsExecutorAbstract<JobType extends Cc2Job, InputRecordTy
     public void execute() {
         logger.info("Started new process.");
         this.totalCount = this.inputDatabaseConnectorImplementation.count(this.mainQuery);
-        this.groupIds = this.inputDatabaseConnectorImplementation.queryGroupIds(
-                this.inputDatabaseConnectorImplementation.getAllGroupIdsQuery(this.mainQuery));
+        this.groupIds = this.inputDatabaseConnectorImplementation.queryGroupIds(this.mainQuery, this.pageGroupAttributeName);
         if(this.groupIds == null || this.groupIds.isEmpty()) {
             logger.info("No data to process. Finishing app...");
             return;
@@ -54,6 +53,7 @@ public abstract class JobsExecutorAbstract<JobType extends Cc2Job, InputRecordTy
             Integer rightIndxValue = this.groupIds.get(rightIndx);
             Object pageQuery = this.inputDatabaseConnectorImplementation.getPageQuery(
                     this.mainQuery,
+                    this.pageGroupAttributeName,
                     leftIndxValue,
                     rightIndxValue);
             this.executePageJob(pageQuery, page, leftIndxValue,

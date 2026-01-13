@@ -37,23 +37,23 @@ public abstract class JobsExecutorAbstract&lt;JobType extends Cc2Job, InputRecor
     public void execute() {
 <span class="fc" id="L38">        logger.info(&quot;Started new process.&quot;);</span>
 <span class="fc" id="L39">        this.totalCount = this.inputDatabaseConnectorImplementation.count(this.mainQuery);</span>
-<span class="fc" id="L40">        this.groupIds = this.inputDatabaseConnectorImplementation.queryGroupIds(</span>
-<span class="fc" id="L41">                this.inputDatabaseConnectorImplementation.getAllGroupIdsQuery(this.mainQuery));</span>
-<span class="fc bfc" id="L42" title="All 4 branches covered.">        if(this.groupIds == null || this.groupIds.isEmpty()) {</span>
-<span class="fc" id="L43">            logger.info(&quot;No data to process. Finishing app...&quot;);</span>
-<span class="fc" id="L44">            return;</span>
+<span class="fc" id="L40">        this.groupIds = this.inputDatabaseConnectorImplementation.queryGroupIds(this.mainQuery, this.pageGroupAttributeName);</span>
+<span class="fc bfc" id="L41" title="All 4 branches covered.">        if(this.groupIds == null || this.groupIds.isEmpty()) {</span>
+<span class="fc" id="L42">            logger.info(&quot;No data to process. Finishing app...&quot;);</span>
+<span class="fc" id="L43">            return;</span>
         }
-<span class="fc" id="L46">        int leftIndx = 0;</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">        int rightIndx = this.maxNumberOfGroupIdsPerPage &gt;= groupIds.size() ? groupIds.size() - 1</span>
-<span class="fc" id="L48">                : this.maxNumberOfGroupIdsPerPage;</span>
-<span class="fc" id="L49">        int page = 0;</span>
-<span class="fc" id="L50">        this.pages = (int) Math.ceil(Double.valueOf(groupIds.size()) / Double.valueOf(this.maxNumberOfGroupIdsPerPage));</span>
+<span class="fc" id="L45">        int leftIndx = 0;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        int rightIndx = this.maxNumberOfGroupIdsPerPage &gt;= groupIds.size() ? groupIds.size() - 1</span>
+<span class="fc" id="L47">                : this.maxNumberOfGroupIdsPerPage;</span>
+<span class="fc" id="L48">        int page = 0;</span>
+<span class="fc" id="L49">        this.pages = (int) Math.ceil(Double.valueOf(groupIds.size()) / Double.valueOf(this.maxNumberOfGroupIdsPerPage));</span>
         do {
-<span class="fc" id="L52">            logger.info(&quot;Processing page &quot; + (page + 1) + &quot; of &quot; + this.pages + &quot;...&quot;);</span>
-<span class="fc" id="L53">            Integer leftIndxValue = this.groupIds.get(leftIndx);</span>
-<span class="fc" id="L54">            Integer rightIndxValue = this.groupIds.get(rightIndx);</span>
-<span class="fc" id="L55">            Object pageQuery = this.inputDatabaseConnectorImplementation.getPageQuery(</span>
+<span class="fc" id="L51">            logger.info(&quot;Processing page &quot; + (page + 1) + &quot; of &quot; + this.pages + &quot;...&quot;);</span>
+<span class="fc" id="L52">            Integer leftIndxValue = this.groupIds.get(leftIndx);</span>
+<span class="fc" id="L53">            Integer rightIndxValue = this.groupIds.get(rightIndx);</span>
+<span class="fc" id="L54">            Object pageQuery = this.inputDatabaseConnectorImplementation.getPageQuery(</span>
                     this.mainQuery,
+                    this.pageGroupAttributeName,
                     leftIndxValue,
                     rightIndxValue);
 <span class="fc" id="L59">            this.executePageJob(pageQuery, page, leftIndxValue,</span>
