@@ -1,0 +1,9 @@
+com\aa\crewcomp\jobs\mock\MyJobsExecutorException.class
+com\aa\crewcomp\jobs\AppTest.class
+com\aa\crewcomp\jobs\mock\MyEntity.class
+com\aa\crewcomp\jobs\mock\MyHashedEntity.class
+com\aa\crewcomp\jobs\mock\MyJobsExecutor.class
+com\aa\crewcomp\jobs\abstr\Cc2HashedEntityTests.class
+com\aa\crewcomp\jobs\mock\MyJob.class
+com\aa\crewcomp\jobs\mock\SubObject.class
+com\aa\crewcomp\jobs\abstr\JobsExecutorAbstractTests.class

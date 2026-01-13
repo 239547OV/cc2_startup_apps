@@ -1,0 +1,10 @@
+C:\Users\239547\Documents\MACH7\development\cc2_startup_apps\libs\cc2-jobs\src\main\java\com\aa\crewcomp\jobs\abstr\Cc2HashedEntity.java
+C:\Users\239547\Documents\MACH7\development\cc2_startup_apps\libs\cc2-jobs\src\main\java\com\aa\crewcomp\jobs\abstr\JobsExecutorAbstract.java
+C:\Users\239547\Documents\MACH7\development\cc2_startup_apps\libs\cc2-jobs\src\main\java\com\aa\crewcomp\jobs\App.java
+C:\Users\239547\Documents\MACH7\development\cc2_startup_apps\libs\cc2-jobs\src\main\java\com\aa\crewcomp\jobs\domain\Cc2ExceptionWrapper.java
+C:\Users\239547\Documents\MACH7\development\cc2_startup_apps\libs\cc2-jobs\src\main\java\com\aa\crewcomp\jobs\domain\Cc2Job.java
+C:\Users\239547\Documents\MACH7\development\cc2_startup_apps\libs\cc2-jobs\src\main\java\com\aa\crewcomp\jobs\domain\Cc2JobStatusEnum.java
+C:\Users\239547\Documents\MACH7\development\cc2_startup_apps\libs\cc2-jobs\src\main\java\com\aa\crewcomp\jobs\impl\Cc2JobRepositoryImpl.java
+C:\Users\239547\Documents\MACH7\development\cc2_startup_apps\libs\cc2-jobs\src\main\java\com\aa\crewcomp\jobs\interfaces\Cc2JobRepositoryInterface.java
+C:\Users\239547\Documents\MACH7\development\cc2_startup_apps\libs\cc2-jobs\src\main\java\com\aa\crewcomp\jobs\interfaces\InputDatabaseConnectorInterface.java
+C:\Users\239547\Documents\MACH7\development\cc2_startup_apps\libs\cc2-jobs\src\main\java\com\aa\crewcomp\jobs\service\MongoBulkInsertService.java

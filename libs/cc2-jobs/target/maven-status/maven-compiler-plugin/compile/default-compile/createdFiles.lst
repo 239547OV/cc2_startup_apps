@@ -1,0 +1,10 @@
+com\aa\crewcomp\jobs\interfaces\InputDatabaseConnectorInterface.class
+com\aa\crewcomp\jobs\domain\Cc2Job.class
+com\aa\crewcomp\jobs\service\MongoBulkInsertService.class
+com\aa\crewcomp\jobs\impl\Cc2JobRepositoryImpl.class
+com\aa\crewcomp\jobs\abstr\Cc2HashedEntity.class
+com\aa\crewcomp\jobs\domain\Cc2ExceptionWrapper.class
+com\aa\crewcomp\jobs\domain\Cc2JobStatusEnum.class
+com\aa\crewcomp\jobs\abstr\JobsExecutorAbstract.class
+com\aa\crewcomp\jobs\App.class
+com\aa\crewcomp\jobs\interfaces\Cc2JobRepositoryInterface.class
