@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: demo
+  main:
+    banner-mode: off
+    web-application-type: none
+  data:
+    mongodb:
+      database: ${CC2_OUTPUT_DB}
+
+databricks-url: ${DATABRICKS_URL}
+databricks-url-http-path: ${DATABRICKS_URL_HTTP_PATH}
+client-id: ${CLIENT_ID}
+secret-key: ${SECRET_KEY}
+keyvault-url: ${CC2_KEYVAULT_URL}
+
+mongodb-conn-string: ${mongodb_conn_string}
+input-data: ${CC2_INPUT_DB}
+output-data: ${CC2_OUTPUT_DB}
