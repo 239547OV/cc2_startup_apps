@@ -39,7 +39,10 @@ public abstract class JobsExecutorAbstract<JobType extends Cc2Job, InputRecordTy
         this.totalCount = this.inputDatabaseConnectorImplementation.count(this.mainQuery);
         this.groupIds = this.inputDatabaseConnectorImplementation.queryGroupIds(
                 this.inputDatabaseConnectorImplementation.getAllGroupIdsQuery(this.mainQuery));
-
+        if(this.groupIds == null || this.groupIds.isEmpty()) {
+            logger.info("No data to process. Finishing app...");
+            return;
+        }
         int leftIndx = 0;
         int rightIndx = this.maxNumberOfGroupIdsPerPage >= groupIds.size() ? groupIds.size() - 1
                 : this.maxNumberOfGroupIdsPerPage;

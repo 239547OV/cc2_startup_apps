@@ -2,6 +2,8 @@ package com.aa.crewcomp.jobs.abstr;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -51,6 +53,8 @@ public class JobsExecutorAbstractTests {
         List<Integer> results = new ArrayList<Integer>();
         results.add(1);
         when(this.inputDatabaseConnectorImplementation.queryGroupIds(any()) ).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(100);
+        when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
         MockitoAnnotations.openMocks(this);
         this.myJobsExecutor.execute();
     }
@@ -60,7 +64,112 @@ public class JobsExecutorAbstractTests {
         List<Integer> results = new ArrayList<Integer>();
         results.add(1);
         when(this.inputDatabaseConnectorImplementation.queryGroupIds(any()) ).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(100);
+        when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
         MockitoAnnotations.openMocks(this);
         this.myJobsExecutorException.execute();
+    }
+
+    @Test
+    public void testExecuteWithMultiplePages(){
+        List<Integer> results = new ArrayList<Integer>();
+        for(int i = 0; i < 25; i++){
+            results.add(i);
+        }
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(250);
+        when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
+        MockitoAnnotations.openMocks(this);
+        this.myJobsExecutor.execute();
+        verify(this.cc2JobRepository, times(3)).saveJob(any());
+    }
+
+    @Test
+    public void testExecuteWithEmptyGroupIds(){
+        List<Integer> results = new ArrayList<Integer>();
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(0);
+        MockitoAnnotations.openMocks(this);
+        this.myJobsExecutor.execute();
+        verify(this.cc2JobRepository, times(0)).saveJob(any());
+    }
+
+    @Test
+    public void testExecuteWithSinglePage(){
+        List<Integer> results = new ArrayList<Integer>();
+        for(int i = 0; i < 5; i++){
+            results.add(i);
+        }
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(50);
+        when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
+        MockitoAnnotations.openMocks(this);
+        this.myJobsExecutor.execute();
+        verify(this.cc2JobRepository, times(1)).saveJob(any());
+        verify(this.cc2JobRepository, times(1)).updateJobEndTime(any(), any());
+    }
+
+    @Test
+    public void testExecuteWithExactPageSize(){
+        List<Integer> results = new ArrayList<Integer>();
+        for(int i = 0; i < 10; i++){
+            results.add(i);
+        }
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(100);
+        when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
+        MockitoAnnotations.openMocks(this);
+        this.myJobsExecutor.execute();
+        verify(this.cc2JobRepository, times(1)).saveJob(any());
+    }
+
+    @Test
+    public void testExecuteWithExceptionVerifiesExceptionUpdate(){
+        List<Integer> results = new ArrayList<Integer>();
+        results.add(1);
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(10);
+        when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
+        MockitoAnnotations.openMocks(this);
+        this.myJobsExecutorException.execute();
+        verify(this.cc2JobRepository, times(1)).updateJobException(any(), any());
+    }
+
+    @Test
+    public void testExecuteWithMultiplePagesVerifyAllProcessed(){
+        List<Integer> results = new ArrayList<Integer>();
+        for(int i = 0; i < 30; i++){
+            results.add(i);
+        }
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(300);
+        when(this.inputDatabaseConnectorImplementation.query(any())).thenReturn(new ArrayList<MyEntity>());
+        MockitoAnnotations.openMocks(this);
+        this.myJobsExecutor.execute();
+        verify(this.cc2JobRepository, times(3)).saveJob(any());
+        verify(this.cc2JobRepository, times(3)).updateJobEndTime(any(), any());
+    }
+
+    @Test
+    public void testExecuteWithNullGroupIds(){
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(null);
+        when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(0);
+        MockitoAnnotations.openMocks(this);
+        this.myJobsExecutor.execute();
+        verify(this.cc2JobRepository, times(0)).saveJob(any());
+        verify(this.cc2JobRepository, times(0)).updateJobStatus(any(), any());
+        verify(this.cc2JobRepository, times(0)).updateJobTotalCount(any(), any());
+    }
+
+    @Test
+    public void testExecuteEarlyReturnWithEmptyGroupIds(){
+        List<Integer> results = new ArrayList<Integer>();
+        when(this.inputDatabaseConnectorImplementation.queryGroupIds(any())).thenReturn(results);
+        when(this.inputDatabaseConnectorImplementation.count(any())).thenReturn(0);
+        MockitoAnnotations.openMocks(this);
+        this.myJobsExecutor.execute();
+        verify(this.cc2JobRepository, times(0)).saveJob(any());
+        verify(this.cc2JobRepository, times(0)).updateJobStatus(any(), any());
+        verify(this.cc2JobRepository, times(0)).updateJobEndTime(any(), any());
     }
 }

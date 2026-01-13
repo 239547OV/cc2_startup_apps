@@ -1,9 +1,9 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 cc2-jobs,com.aa.crewcomp.jobs.abstr,Cc2HashedEntity,0,89,0,2,0,23,0,8,0,7
-cc2-jobs,com.aa.crewcomp.jobs.abstr,JobsExecutorAbstract,3,260,3,3,0,47,3,4,0,4
+cc2-jobs,com.aa.crewcomp.jobs.abstr,JobsExecutorAbstract,0,274,0,10,0,50,0,9,0,4
 cc2-jobs,com.aa.crewcomp.jobs,App,0,7,0,0,0,3,0,2,0,2
 cc2-jobs,com.aa.crewcomp.jobs.domain,Cc2ExceptionWrapper,0,26,0,0,0,8,0,2,0,2
 cc2-jobs,com.aa.crewcomp.jobs.domain,Cc2JobStatusEnum,0,27,0,0,0,5,0,1,0,1
 cc2-jobs,com.aa.crewcomp.jobs.domain,Cc2Job,0,36,0,0,0,12,0,1,0,1
-cc2-jobs,com.aa.crewcomp.jobs.impl,Cc2JobRepositoryImpl,147,0,0,0,27,0,8,0,8,0
-cc2-jobs,com.aa.crewcomp.jobs.service,MongoBulkInsertService,148,0,6,0,37,0,8,0,5,0
+cc2-jobs,com.aa.crewcomp.jobs.impl,Cc2JobRepositoryImpl,0,147,0,0,0,27,0,8,0,8
+cc2-jobs,com.aa.crewcomp.jobs.service,MongoBulkInsertService,0,148,0,6,0,37,0,8,0,5

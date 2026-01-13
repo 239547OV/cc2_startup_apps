@@ -39,53 +39,56 @@ public abstract class JobsExecutorAbstract&lt;JobType extends Cc2Job, InputRecor
 <span class="fc" id="L39">        this.totalCount = this.inputDatabaseConnectorImplementation.count(this.mainQuery);</span>
 <span class="fc" id="L40">        this.groupIds = this.inputDatabaseConnectorImplementation.queryGroupIds(</span>
 <span class="fc" id="L41">                this.inputDatabaseConnectorImplementation.getAllGroupIdsQuery(this.mainQuery));</span>
-
-<span class="fc" id="L43">        int leftIndx = 0;</span>
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        int rightIndx = this.maxNumberOfGroupIdsPerPage &gt;= groupIds.size() ? groupIds.size() - 1</span>
-<span class="pc" id="L45">                : this.maxNumberOfGroupIdsPerPage;</span>
-<span class="fc" id="L46">        int page = 0;</span>
-<span class="fc" id="L47">        this.pages = (int) Math.ceil(Double.valueOf(groupIds.size()) / Double.valueOf(this.maxNumberOfGroupIdsPerPage));</span>
+<span class="fc bfc" id="L42" title="All 4 branches covered.">        if(this.groupIds == null || this.groupIds.isEmpty()) {</span>
+<span class="fc" id="L43">            logger.info(&quot;No data to process. Finishing app...&quot;);</span>
+<span class="fc" id="L44">            return;</span>
+        }
+<span class="fc" id="L46">        int leftIndx = 0;</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        int rightIndx = this.maxNumberOfGroupIdsPerPage &gt;= groupIds.size() ? groupIds.size() - 1</span>
+<span class="fc" id="L48">                : this.maxNumberOfGroupIdsPerPage;</span>
+<span class="fc" id="L49">        int page = 0;</span>
+<span class="fc" id="L50">        this.pages = (int) Math.ceil(Double.valueOf(groupIds.size()) / Double.valueOf(this.maxNumberOfGroupIdsPerPage));</span>
         do {
-<span class="fc" id="L49">            logger.info(&quot;Processing page &quot; + (page + 1) + &quot; of &quot; + this.pages + &quot;...&quot;);</span>
-<span class="fc" id="L50">            Integer leftIndxValue = this.groupIds.get(leftIndx);</span>
-<span class="fc" id="L51">            Integer rightIndxValue = this.groupIds.get(rightIndx);</span>
-<span class="fc" id="L52">            Object pageQuery = this.inputDatabaseConnectorImplementation.getPageQuery(</span>
+<span class="fc" id="L52">            logger.info(&quot;Processing page &quot; + (page + 1) + &quot; of &quot; + this.pages + &quot;...&quot;);</span>
+<span class="fc" id="L53">            Integer leftIndxValue = this.groupIds.get(leftIndx);</span>
+<span class="fc" id="L54">            Integer rightIndxValue = this.groupIds.get(rightIndx);</span>
+<span class="fc" id="L55">            Object pageQuery = this.inputDatabaseConnectorImplementation.getPageQuery(</span>
                     this.mainQuery,
                     leftIndxValue,
                     rightIndxValue);
-<span class="fc" id="L56">            this.executePageJob(pageQuery, page, leftIndxValue,</span>
+<span class="fc" id="L59">            this.executePageJob(pageQuery, page, leftIndxValue,</span>
                     rightIndxValue);
-<span class="fc" id="L58">            leftIndx += this.maxNumberOfGroupIdsPerPage;</span>
-<span class="fc" id="L59">            rightIndx = leftIndx + this.maxNumberOfGroupIdsPerPage;</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">            if (rightIndx &gt; groupIds.size() - 1)</span>
-<span class="fc" id="L61">                rightIndx = groupIds.size() - 1;</span>
-<span class="fc" id="L62">            page += 1;</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        } while (leftIndx &lt; groupIds.size());</span>
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L61">            leftIndx += this.maxNumberOfGroupIdsPerPage;</span>
+<span class="fc" id="L62">            rightIndx = leftIndx + this.maxNumberOfGroupIdsPerPage;</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            if (rightIndx &gt; groupIds.size() - 1)</span>
+<span class="fc" id="L64">                rightIndx = groupIds.size() - 1;</span>
+<span class="fc" id="L65">            page += 1;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        } while (leftIndx &lt; groupIds.size());</span>
+<span class="fc" id="L67">    }</span>
 
     private void executePageJob(Object pageQuery, Integer page, Integer leftIndxValue,
             Integer rightIndxValue) {
-<span class="fc" id="L68">        Cc2Job cc2Job = new Cc2Job(this.startTime, page, this.pages, this.pageGroupAttributeName, leftIndxValue,</span>
+<span class="fc" id="L71">        Cc2Job cc2Job = new Cc2Job(this.startTime, page, this.pages, this.pageGroupAttributeName, leftIndxValue,</span>
                 rightIndxValue, this.totalCount);
-<span class="fc" id="L70">        cc2Job.setJobStartTime(new Date());</span>
-<span class="fc" id="L71">        this.cc2JobRepository.saveJob(cc2Job);</span>
-<span class="fc" id="L72">        this.cc2JobRepository.updateJobStatus(cc2Job.getId(), Cc2JobStatusEnum.QUERYING.toString());</span>
-<span class="fc" id="L73">        logger.info(&quot;Querying page &quot; + (page + 1) + &quot; of &quot; + this.pages + &quot;...&quot;);</span>
-<span class="fc" id="L74">        Integer pageRecordsCount = this.inputDatabaseConnectorImplementation.count(pageQuery);</span>
-<span class="fc" id="L75">        this.cc2JobRepository.updateJobTotalCount(cc2Job.getId(), pageRecordsCount);</span>
-<span class="fc" id="L76">        logger.info(&quot;Query returned &quot; + pageRecordsCount + &quot; records. Processing page...&quot;);</span>
-<span class="fc" id="L77">        List&lt;InputRecordType&gt; pageRecords = this.inputDatabaseConnectorImplementation.query(pageQuery);</span>
+<span class="fc" id="L73">        cc2Job.setJobStartTime(new Date());</span>
+<span class="fc" id="L74">        this.cc2JobRepository.saveJob(cc2Job);</span>
+<span class="fc" id="L75">        this.cc2JobRepository.updateJobStatus(cc2Job.getId(), Cc2JobStatusEnum.QUERYING.toString());</span>
+<span class="fc" id="L76">        logger.info(&quot;Querying page &quot; + (page + 1) + &quot; of &quot; + this.pages + &quot;...&quot;);</span>
+<span class="fc" id="L77">        Integer pageRecordsCount = this.inputDatabaseConnectorImplementation.count(pageQuery);</span>
+<span class="fc" id="L78">        this.cc2JobRepository.updateJobTotalCount(cc2Job.getId(), pageRecordsCount);</span>
+<span class="fc" id="L79">        logger.info(&quot;Query returned &quot; + pageRecordsCount + &quot; records. Processing page...&quot;);</span>
+<span class="fc" id="L80">        List&lt;InputRecordType&gt; pageRecords = this.inputDatabaseConnectorImplementation.query(pageQuery);</span>
         try {
-<span class="fc" id="L79">            this.cc2JobRepository.updateJobStatus(cc2Job.getId(), Cc2JobStatusEnum.EXECUTING_RULES_ENGINE.toString());</span>
-<span class="fc" id="L80">            this.processPageRecords(pageRecords);</span>
-<span class="fc" id="L81">        } catch (Exception e) {</span>
-<span class="fc" id="L82">            logger.warn(&quot;An error occurred while processing page &quot; + (page + 1) + &quot; of &quot; + this.pages + &quot;.&quot;, e);</span>
-<span class="fc" id="L83">            this.cc2JobRepository.updateJobException(cc2Job.getId(), new Cc2ExceptionWrapper(e));</span>
+<span class="fc" id="L82">            this.cc2JobRepository.updateJobStatus(cc2Job.getId(), Cc2JobStatusEnum.EXECUTING_RULES_ENGINE.toString());</span>
+<span class="fc" id="L83">            this.processPageRecords(pageRecords);</span>
+<span class="fc" id="L84">        } catch (Exception e) {</span>
+<span class="fc" id="L85">            logger.warn(&quot;An error occurred while processing page &quot; + (page + 1) + &quot; of &quot; + this.pages + &quot;.&quot;, e);</span>
+<span class="fc" id="L86">            this.cc2JobRepository.updateJobException(cc2Job.getId(), new Cc2ExceptionWrapper(e));</span>
         } finally {
-<span class="fc" id="L85">            this.cc2JobRepository.updateJobStatus(cc2Job.getId(), Cc2JobStatusEnum.QUERYING.toString());</span>
-<span class="fc" id="L86">            logger.info(&quot;Finished processing page &quot; + (page + 1) + &quot; of &quot; + this.pages + &quot;.&quot;);</span>
-<span class="fc" id="L87">            this.cc2JobRepository.updateJobEndTime(cc2Job.getId(), new Date());</span>
+<span class="fc" id="L88">            this.cc2JobRepository.updateJobStatus(cc2Job.getId(), Cc2JobStatusEnum.QUERYING.toString());</span>
+<span class="fc" id="L89">            logger.info(&quot;Finished processing page &quot; + (page + 1) + &quot; of &quot; + this.pages + &quot;.&quot;);</span>
+<span class="fc" id="L90">            this.cc2JobRepository.updateJobEndTime(cc2Job.getId(), new Date());</span>
         }
-<span class="fc" id="L89">    }</span>
+<span class="fc" id="L92">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

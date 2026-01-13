@@ -15,55 +15,55 @@ import com.aa.crewcomp.jobs.domain.Cc2Job;
 import com.aa.crewcomp.jobs.interfaces.Cc2JobRepositoryInterface;
 
 @Component
-<span class="nc" id="L18">public class Cc2JobRepositoryImpl implements Cc2JobRepositoryInterface {</span>
+<span class="fc" id="L18">public class Cc2JobRepositoryImpl implements Cc2JobRepositoryInterface {</span>
     @Autowired
     private MongoTemplate outputMongoTemplate;
 
     @Override
     public void saveJob(Cc2Job cc2Job) {
-<span class="nc" id="L24">        this.outputMongoTemplate.save(cc2Job);</span>
-<span class="nc" id="L25">    }</span>
+<span class="fc" id="L24">        this.outputMongoTemplate.save(cc2Job);</span>
+<span class="fc" id="L25">    }</span>
 
     @Override
     public void updateJobStatus(Object id, String status) {
-<span class="nc" id="L29">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
-<span class="nc" id="L30">        Update update = new Update().set(&quot;status&quot;, status);</span>
-<span class="nc" id="L31">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
-<span class="nc" id="L32">    }</span>
+<span class="fc" id="L29">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
+<span class="fc" id="L30">        Update update = new Update().set(&quot;status&quot;, status);</span>
+<span class="fc" id="L31">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
+<span class="fc" id="L32">    }</span>
 
     @Override
     public void updateJobTotalCount(Object id, Integer pageRecordsCount) {
-<span class="nc" id="L36">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
-<span class="nc" id="L37">        Update update = new Update().set(&quot;jobTotalInputRecords&quot;, pageRecordsCount);</span>
-<span class="nc" id="L38">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
-<span class="nc" id="L39">    }</span>
+<span class="fc" id="L36">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
+<span class="fc" id="L37">        Update update = new Update().set(&quot;jobTotalInputRecords&quot;, pageRecordsCount);</span>
+<span class="fc" id="L38">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
+<span class="fc" id="L39">    }</span>
 
     @Override
     public void updateJobException(Object id, Cc2ExceptionWrapper cc2Exception) {
-<span class="nc" id="L43">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
-<span class="nc" id="L44">        Update update = new Update().set(&quot;jobException&quot;, cc2Exception);</span>
-<span class="nc" id="L45">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
-<span class="nc" id="L46">    }</span>
+<span class="fc" id="L43">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
+<span class="fc" id="L44">        Update update = new Update().set(&quot;jobException&quot;, cc2Exception);</span>
+<span class="fc" id="L45">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
+<span class="fc" id="L46">    }</span>
 
     @Override
     public void updateJobEndTime(Object id, Date date) {
-<span class="nc" id="L50">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
-<span class="nc" id="L51">        Update update = new Update().set(&quot;jobEndTime&quot;, date);</span>
-<span class="nc" id="L52">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
-<span class="nc" id="L53">    }</span>
+<span class="fc" id="L50">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
+<span class="fc" id="L51">        Update update = new Update().set(&quot;jobEndTime&quot;, date);</span>
+<span class="fc" id="L52">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
+<span class="fc" id="L53">    }</span>
 
     @Override
     public void incrementInsertedCount(ObjectId id, Integer count) {
-<span class="nc" id="L57">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
-<span class="nc" id="L58">        Update update = new Update().inc(&quot;jobTotalInsertedRecords&quot;, count);</span>
-<span class="nc" id="L59">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
-<span class="nc" id="L60">    }</span>
+<span class="fc" id="L57">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
+<span class="fc" id="L58">        Update update = new Update().inc(&quot;jobTotalInsertedRecords&quot;, count);</span>
+<span class="fc" id="L59">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
+<span class="fc" id="L60">    }</span>
 
     @Override
     public void incrementIgnoredDuplicateCount(ObjectId id, Integer count) {
-<span class="nc" id="L64">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
-<span class="nc" id="L65">        Update update = new Update().inc(&quot;jobTotalIgnoredRecords&quot;, count);</span>
-<span class="nc" id="L66">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
-<span class="nc" id="L67">    }</span>
+<span class="fc" id="L64">        Query query = new Query(where(&quot;_id&quot;).is(id));</span>
+<span class="fc" id="L65">        Update update = new Update().inc(&quot;jobTotalIgnoredRecords&quot;, count);</span>
+<span class="fc" id="L66">        this.outputMongoTemplate.updateFirst(query, update, Cc2Job.class);</span>
+<span class="fc" id="L67">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
